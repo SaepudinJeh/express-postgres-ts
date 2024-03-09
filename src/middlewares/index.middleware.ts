@@ -6,7 +6,7 @@ export const errorMiddleware = (error: Error, req: Request, res: Response, next:
     if(error instanceof ZodError) {
         res.status(400).json({
             statusCode: 400,
-            message: error?.message ?? error
+            message: error?.errors
         })
     }
 

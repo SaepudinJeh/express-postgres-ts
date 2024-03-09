@@ -5,7 +5,8 @@ export class ProductValidation {
         name: z.string().min(1),
         desc: z.string().min(1),
         price: z.number(),
-        stock: z.number()
+        stock: z.number(),
+        brandId: z.number()
     }).required()
 
     static readonly UPDATE: ZodType = z.object({
