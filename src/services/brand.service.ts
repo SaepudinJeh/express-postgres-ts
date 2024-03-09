@@ -4,6 +4,8 @@ import { BrandValidation } from "../validations/brand.validation";
 import { Validation } from "../validations/validation";
 import { prisma } from "../app/database.app";
 import { ResponseError } from "../helpers/error_response.helper";
+import { QueryValidation } from "../validations/query.validation";
+import { QueryRequest } from "../models/query.model";
 
 export class BrandService {
     static async create(payload: CreateBrandRequest): Promise<BrandResponse> {
@@ -45,9 +47,12 @@ export class BrandService {
         return "Success Deleted Brand!"
     }
 
-    static async getBrands(): Promise<Brand[]> {
+    static async getBrands(query: QueryRequest): Promise<Brand[]> {
+        const validation = Validation.validate(QueryValidation.QUERY_TEXT, query);
+
         const result = await prisma.brand.findMany({
             where: {
+                name: validation.search,
                 deletedAt: { equals: null }
             },
             include: { products: true },

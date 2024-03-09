@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { CreateProductRequest, UpdateProductRequest } from "../models/product.model";
 import { ProductService } from "../services/product.service";
 import { ResponseError } from "../helpers/error_response.helper";
+import { QueryRequest } from "../models/query.model";
 
 export class ProductController {
     static async create(req: Request, res: Response, next: NextFunction) {
@@ -60,7 +61,9 @@ export class ProductController {
 
     static async getBrands(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await ProductService.getProducts();
+            const payload: QueryRequest = req.body as QueryRequest;
+
+            const result = await ProductService.getProducts(payload);
 
             return res.status(200).json({
                 statusCode: 200,

@@ -5,6 +5,8 @@ import { ProductValidation } from "../validations/product.validation";
 import { Validation } from "../validations/validation";
 import { BrandService } from "./brand.service";
 import { ResponseError } from "../helpers/error_response.helper";
+import { QueryValidation } from "../validations/query.validation";
+import { QueryRequest } from "../models/query.model";
 
 export class ProductService {
     static async create(payload: CreateProductRequest): Promise<ProductResponse> {
@@ -56,8 +58,13 @@ export class ProductService {
     }
 
     
-    static async getProducts(): Promise<Products[]> {
+    static async getProducts(query: QueryRequest): Promise<Products[]> {
+        const validation = Validation.validate(QueryValidation.QUERY_TEXT, query);
+
         const result = await prisma.products.findMany({
+            where: {
+                name: validation.search
+            },
             include: { brand: true }
         })
 
