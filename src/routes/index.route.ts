@@ -2,6 +2,7 @@ import express from "express"
 import { version_api } from "../helpers/version.api.helper"
 import { BrandController } from "../controllers/brand.controller"
 import { ProductController } from "../controllers/product.controller";
+import { SummaryController } from "../controllers/summary.controller";
 
 export const router = express.Router()
 // Brand
@@ -17,3 +18,6 @@ router.put(`/${version_api}/product/:id`, ProductController.update)
 router.delete(`/${version_api}/product:/:id`, ProductController.create)
 router.get(`/${version_api}/products`, ProductController.getBrands)
 router.get(`/${version_api}/product/:id`, ProductController.getBrand)
+
+// Summary
+router.get(`/${version_api}/summary`, SummaryController.get)
