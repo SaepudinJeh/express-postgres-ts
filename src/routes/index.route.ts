@@ -13,3 +13,7 @@ router.get(`/${version_api}/brand/:id`, BrandController.getBrand);
 
 // Product
 router.post(`/${version_api}/product`, ProductController.create)
+router.put(`/${version_api}/product/:id`, ProductController.update)
+router.delete(`/${version_api}/product:/:id`, ProductController.create)
+router.get(`/${version_api}/products`, ProductController.getBrands)
+router.get(`/${version_api}/product/:id`, ProductController.getBrand)

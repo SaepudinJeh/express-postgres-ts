@@ -21,6 +21,8 @@ model Brand {
   deletedAt DateTime?
 
   products Products[]
+
+  @@map("brands")
 }
 
 model Products {
@@ -33,4 +35,6 @@ model Products {
   brand Brand @relation(fields: [brandId], references: [id])
 
   brandId Int
+
+  @@map("products")
 }

@@ -58,7 +58,7 @@ export class BrandService {
 
     static async getBrand(id: number): Promise<Brand> {
         const result = await prisma.brand.findFirst({
-            where: { id },
+            where: { id, deletedAt: { equals: null } },
             include: { products: true },
         })
 

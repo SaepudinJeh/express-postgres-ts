@@ -21,7 +21,8 @@ export type UpdateProductRequest = {
     name?: string,
     desc?: string,
     price?: number,
-    stock?: number
+    stock?: number,
+    brandId?: number
 }
 
 export type GetProductRequest = {

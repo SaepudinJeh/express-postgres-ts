@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateProductRequest } from "../models/product.model";
+import { CreateProductRequest, UpdateProductRequest } from "../models/product.model";
 import { ProductService } from "../services/product.service";
+import { ResponseError } from "../helpers/error_response.helper";
 
 export class ProductController {
     static async create(req: Request, res: Response, next: NextFunction) {
@@ -16,6 +17,76 @@ export class ProductController {
             })
         } catch (error) {
             next(error)
+        }
+    }
+
+    static async update(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = Number(req.params?.id)
+
+            if(isNaN(id)) throw new ResponseError(400, "ID must be INT!");
+
+            const payload: UpdateProductRequest = req.body as UpdateProductRequest;
+
+            const response = await ProductService.update(id, payload);
+
+            return res.status(200).json({
+                statusCode: 200,
+                message: "Success Updated Brand!",
+                data: response
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async delete(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = Number(req.params?.id)
+
+            if(isNaN(id)) throw new ResponseError(400, "ID must be INT!");
+
+            const response = await ProductService.delete(id)
+
+            return res.status(200).json({
+                statusCode: 200,
+                message: "Success Deleed Brand!",
+                data: response
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async getBrands(req: Request, res: Response, next: NextFunction) {
+        try {
+            const result = await ProductService.getProducts();
+
+            return res.status(200).json({
+                statusCode: 200,
+                message: "Success",
+                data: result
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async getBrand(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = Number(req.params?.id)
+
+            if(isNaN(id)) throw new ResponseError(400, "ID must be INT!");
+
+            const response = await ProductService.getProduct(id)
+
+            return res.status(200).json({
+                statusCode: 200,
+                message: "Success Get Brand!",
+                data: response
+            })
+        } catch (error) {
+            next(error);
         }
     }
 }
