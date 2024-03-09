@@ -55,4 +55,15 @@ export class BrandService {
 
         return result
     }
+
+    static async getBrand(id: number): Promise<Brand> {
+        const result = await prisma.brand.findFirst({
+            where: { id },
+            include: { products: true },
+        })
+
+        if(!result) throw new ResponseError(400, "Brand Not Exist!");
+
+        return result
+    }
 }

@@ -71,4 +71,22 @@ export class BrandController {
             next(error)
         }
     }
+
+    static async getBrand(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = Number(req.params?.id)
+
+            if(isNaN(id)) throw new ResponseError(400, "ID must be INT!");
+
+            const response = await BrandService.getBrand(id)
+
+            return res.status(200).json({
+                statusCode: 200,
+                message: "Success Get Brand!",
+                data: response
+            })
+        } catch (error) {
+            next(error);
+        }
+    }
 }
