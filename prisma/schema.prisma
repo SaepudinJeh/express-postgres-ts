@@ -18,6 +18,7 @@ model Brand {
   id    Int @id @default(autoincrement())
   name  String
   desc  String
+  deletedAt DateTime?
 
   products Products[]
 }
